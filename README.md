@@ -52,7 +52,10 @@ This project creates a web application for reviewing movies, allowing users to c
 - Return helpful error messages with correct HTTP status codes.
 
 ## Deployment
-- Deployed on **Render** and accessible via an external URL.
+- Deployed on **Render** [and accessible via an external URL.](https://movies-api-cse-341.onrender.com/)
+
+## Deployment
+ - Use /api-docs to get the API Swagger documentation
 
 ## Setup
 
