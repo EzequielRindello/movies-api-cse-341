@@ -5,6 +5,7 @@ const createError = require("http-errors");
 
 // GET method: Get all movies
 const getAll = async (req, res, next) => {
+  // #swagger.tags = ['Movies']
   try {
     const result = await mongodb.getDatabase().db().collection("movies").find();
     const movies = await result.toArray();
@@ -17,6 +18,7 @@ const getAll = async (req, res, next) => {
 
 // GET method: Get a single movie by ID
 const getSingle = async (req, res, next) => {
+  // #swagger.tags = ['Movies']
   try {
     const movieId = new ObjectId(req.params.id);
     const result = await mongodb
@@ -32,12 +34,15 @@ const getSingle = async (req, res, next) => {
       next(createError(404, "Movie not found"));
     }
   } catch (error) {
-    next(createError(500, "An error occurred while fetching the movie: " + error));
+    next(
+      createError(500, "An error occurred while fetching the movie: " + error)
+    );
   }
 };
 
 // POST method: Add a movie
 const addMovie = async (req, res, next) => {
+  // #swagger.tags = ['Movies']
   try {
     const validatedMovie = await movieSchema.validateAsync(req.body);
 
@@ -56,13 +61,16 @@ const addMovie = async (req, res, next) => {
     if (error.isJoi) {
       next(createError(400, "Invalid data format"));
     } else {
-      next(createError(500, "An error occurred while adding the movie: " + error));
+      next(
+        createError(500, "An error occurred while adding the movie: " + error)
+      );
     }
   }
 };
 
 // PUT method: Update a movie by ID
 const updateMovie = async (req, res, next) => {
+  // #swagger.tags = ['Movies']
   try {
     const movieId = new ObjectId(req.params.id);
     const validatedMovie = await movieSchema.validateAsync(req.body);
@@ -84,12 +92,15 @@ const updateMovie = async (req, res, next) => {
     }
   } catch (error) {
     console.error("Error updating movie:", error);
-    next(createError(500, "An error occurred while updating the movie: " + error));
+    next(
+      createError(500, "An error occurred while updating the movie: " + error)
+    );
   }
 };
 
 // DELETE method: Delete a movie by ID
 const deleteMovie = async (req, res, next) => {
+  // #swagger.tags = ['Movies']
   try {
     const movieId = new ObjectId(req.params.id);
 
@@ -106,7 +117,9 @@ const deleteMovie = async (req, res, next) => {
     res.status(200).send("Movie deleted successfully");
   } catch (error) {
     console.error("Error deleting movie:", error);
-    next(createError(500, "An error occurred while deleting the movie: " + error));
+    next(
+      createError(500, "An error occurred while deleting the movie: " + error)
+    );
   }
 };
 

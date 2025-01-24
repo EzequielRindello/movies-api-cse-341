@@ -8,6 +8,19 @@ const createError = require("http-errors");
 // Middleware to parse incoming requests with JSON payloads to req.body INDISPENSABLE
 app.use(bodyParser.json());
 
+// swagger docs route for the app
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "Origin, X-Requested-With, Content-Type, Accept, Z-Key"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  next();
+});
+
 // route for the app
 app.use("/", require("./routes/index.js"));
 

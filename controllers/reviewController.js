@@ -5,6 +5,7 @@ const createError = require("http-errors");
 
 // GET method: Get all movies
 const getAll = async (req, res, next) => {
+  // #swagger.tags = ['Reviews']
   try {
     const result = await mongodb
       .getDatabase()
@@ -23,6 +24,7 @@ const getAll = async (req, res, next) => {
 
 // GET method: Get a single movie by ID
 const getSingle = async (req, res, next) => {
+  // #swagger.tags = ['Reviews']
   try {
     const reviewId = new ObjectId(req.params.id);
     const result = await mongodb
@@ -46,6 +48,7 @@ const getSingle = async (req, res, next) => {
 
 // POST method: Add a movie
 const addReview = async (req, res, next) => {
+  // #swagger.tags = ['Reviews']
   try {
     const validatedReview = await reviewSchema.validateAsync(req.body);
 
@@ -73,6 +76,7 @@ const addReview = async (req, res, next) => {
 
 // PUT method: Update a movie by ID
 const updateReview = async (req, res, next) => {
+  // #swagger.tags = ['Reviews']
   try {
     const reviewId = new ObjectId(req.params.id);
     const validatedReview = await reviewSchema.validateAsync(req.body);
@@ -93,7 +97,10 @@ const updateReview = async (req, res, next) => {
       next(createError(400, "Invalid data format"));
     } else {
       next(
-        createError(500, "An error occurred while updating the review: " + error)
+        createError(
+          500,
+          "An error occurred while updating the review: " + error
+        )
       );
     }
   }
@@ -101,6 +108,7 @@ const updateReview = async (req, res, next) => {
 
 // DELETE method: Delete a movie by ID
 const deleteReview = async (req, res, next) => {
+  // #swagger.tags = ['Reviews']
   try {
     const reviewId = new ObjectId(req.params.id);
 

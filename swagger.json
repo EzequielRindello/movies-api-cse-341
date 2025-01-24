@@ -1,0 +1,384 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "movies API",
+    "description": "API for movies and reviews",
+    "version": "1.0.0"
+  },
+  "host": "movies-api-cse-341.onrender.com",
+  "basePath": "/",
+  "schemes": ["https"],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["Restful api for movies"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/movies/": {
+      "get": {
+        "tags": ["Movies"],
+        "description": "",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Movies"],
+        "description": "Create a new movie",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Movie object to create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 45
+                },
+                "genre": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 45
+                },
+                "releaseDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "director": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 45
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255
+                },
+                "averageRating": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/movies/{id}": {
+      "get": {
+        "tags": ["Movies"],
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Movies"],
+        "description": "Update an existing movie",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the movie to be updated",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "description": "Movie object to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 45
+                },
+                "genre": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 45
+                },
+                "releaseDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "director": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 45
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255
+                },
+                "averageRating": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Movies"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/reviews/": {
+      "get": {
+        "tags": ["Reviews"],
+        "description": "",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Reviews"],
+        "description": "Create a new review for a movie",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Review object to create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "movieId": {
+                  "type": "string",
+                  "description": "The ID of the movie being reviewed",
+                  "pattern": "^[a-fA-F0-9]{24}$",
+                  "example": "60d5f479b7d1d8f0f3a4899b"
+                },
+                "IMDbReview": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "description": "IMDb review of the movie"
+                },
+                "RottenTomatoesReview": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "description": "Rotten Tomatoes review of the movie"
+                },
+                "MetacriticReview": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "description": "Metacritic review of the movie"
+                },
+                "LetterboxdReview": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "description": "Letterboxd review of the movie"
+                }
+              },
+              "required": [
+                "movieId",
+                "IMDbReview",
+                "RottenTomatoesReview",
+                "MetacriticReview",
+                "LetterboxdReview"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Review Created"
+          }
+        }
+      }
+    },
+    "/reviews/{id}": {
+      "get": {
+        "tags": ["Reviews"],
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Reviews"],
+        "description": "Update an existing review for a movie",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the review to update",
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{24}$",
+            "example": "60d5f479b7d1d8f0f3a4899b"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Review object to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "movieId": {
+                  "type": "string",
+                  "description": "The ID of the movie being reviewed",
+                  "pattern": "^[a-fA-F0-9]{24}$",
+                  "example": "60d5f479b7d1d8f0f3a4899b"
+                },
+                "IMDbReview": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "description": "IMDb review of the movie"
+                },
+                "RottenTomatoesReview": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "description": "Rotten Tomatoes review of the movie"
+                },
+                "MetacriticReview": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "description": "Metacritic review of the movie"
+                },
+                "LetterboxdReview": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255,
+                  "description": "Letterboxd review of the movie"
+                }
+              },
+              "required": [
+                "movieId",
+                "IMDbReview",
+                "RottenTomatoesReview",
+                "MetacriticReview",
+                "LetterboxdReview"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Review Updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Reviews"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
