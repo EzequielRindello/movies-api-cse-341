@@ -3,11 +3,25 @@ const app = express();
 const mongodb = require("./db/db.js");
 const port = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
+const createError = require("http-errors");
 
 // Middleware to parse incoming requests with JSON payloads to req.body INDISPENSABLE
 app.use(bodyParser.json());
 
+// route for the app
 app.use("/", require("./routes/index.js"));
+
+// Error handler middleware (must be at the end of all routes)
+app.use((err, req, res, next) => {
+  // If the error is not a HTTP error, we create one
+  if (!err.status) {
+    err = createError(500, err.message || "Internal Server Error");
+  }
+  // Send the response
+  const status = err.status || 500;
+  const message = err.message || "Internal Server Error";
+  res.status(status).send(message);
+});
 
 // Connect to MongoDB
 mongodb.intDb((err) => {
