@@ -11,5 +11,17 @@ const movieSchema = Joi.object({
   updatedAt: Joi.string().isoDate().required(),
 }).options({ stripUnknown: true });
 
+const reviewSchema = Joi.object({
+  movieId: Joi.string()
+    .regex(/^[a-fA-F0-9]{24}$/)
+    .required()
+    .messages({
+      "string.pattern.base": "El movieId debe ser un ObjectId válido.",
+    }),
+  IMDbReview: Joi.string().min(1).max(255).required(),
+  RottenTomatoesReview: Joi.string().min(1).max(255).required(),
+  MetacriticReview: Joi.string().min(1).max(255).required(),
+  LetterboxdReview: Joi.string().min(1).max(255).required(),
+}).options({ stripUnknown: true });
 
-module.exports = { movieSchema };
+module.exports = { movieSchema, reviewSchema };
