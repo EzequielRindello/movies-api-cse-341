@@ -52,7 +52,10 @@ This project creates a web application for reviewing movies, allowing users to c
 - Return helpful error messages with correct HTTP status codes.
 
 ## Deployment
-- Deployed on **Render** and accessible via an external URL.
+- Deployed on **Render** [Visit Movies API](https://movies-api-cse-341.onrender.com/)
+
+## Documentation
+ - Use /api-docs to get the API Swagger documentation
 
 ## Setup
 
@@ -74,22 +77,12 @@ This project creates a web application for reviewing movies, allowing users to c
    ```
 4. Add a `.env` file with:
    ```env
-   MONGO_URI=your-mongodb-uri
+   MONGO_URI=your-mongodb-uri/your-database
    JWT_SECRET=your-jwt-secret
    OAUTH_CLIENT_ID=your-client-id
    OAUTH_CLIENT_SECRET=your-client-secret
-   PORT=3000
    ```
 5. Start the server:
    ```bash
-   npm run dev
+   npm start
    ```
-
-### Deployment
-- Follow [Render's guide](https://render.com/docs/deploy-nodejs) to deploy your app.
-
-## Contributing
-Contributions are welcome! Fork the repo and submit a pull request.
-
-## License
-Licensed under the MIT License.
