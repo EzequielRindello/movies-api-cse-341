@@ -15,34 +15,25 @@ This project creates a web application for reviewing movies, allowing users to c
 - Deploy the API on **Render** for external access.
 
 ### Collections
-1. **Users**
-   - Fields: `id`, `name`, `email`, `password`, `role`, `createdAt`, `updatedAt`
-2. **Movies**
+1. **Movies**
    - Fields: `id`, `title`, `genre`, `releaseDate`, `director`, `description`, `averageRating`, `createdAt`, `updatedAt`
-3. **Comments**
-   - Fields: `id`, `userId`, `movieId`, `commentText`, `rating`, `createdAt`, `updatedAt`
+2. **Review**
+   - Fields: `id`, `movieId`, `review`
 
 ## Features
 
 ### API Endpoints
-#### Users
-- `POST /auth/register`: Register a new user.
-- `POST /auth/login`: Log in a user with OAuth.
-- `GET /users/:id`: Get user info.
-- `PUT /users/:id`: Update user info.
-- `DELETE /users/:id`: Delete a user.
-
 #### Movies
 - `GET /movies`: Get all movies.
 - `POST /movies`: Add a new movie (Admin only).
 - `PUT /movies/:id`: Update movie info (Admin only).
 - `DELETE /movies/:id`: Remove a movie (Admin only).
 
-#### Comments
-- `GET /movies/:id/comments`: Get all comments for a movie.
-- `POST /movies/:id/comments`: Add a comment to a movie.
-- `PUT /comments/:id`: Update a comment.
-- `DELETE /comments/:id`: Remove a comment.
+#### Review
+- `GET /review/:id/review`: Get all Review for a movie.
+- `POST /review/:id/review`: Add a Review to a movie.
+- `PUT /review/:id`: Update a Review.
+- `DELETE /review/:id`: Remove a Review.
 
 ### Authentication
 - Use **OAuth** for secure user login.
