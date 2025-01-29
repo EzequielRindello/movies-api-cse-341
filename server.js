@@ -17,7 +17,12 @@ app.use(
   session({
     secret: "secret",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false, 
+    cookie: {
+      secure: false,
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000, 
+    },
   })
 );
 
@@ -56,36 +61,44 @@ passport.use(
   )
 );
 
-// Serialize user
 passport.serializeUser((user, done) => {
-  done(null, user);
+  done(null, user.id);
 });
-// Deserialize user
-passport.deserializeUser((user, done) => {
-  done(null, user);
+
+passport.deserializeUser((id, done) => {
+  done(null, { id });
 });
+
 
 // Middleware to handle authentication with GitHub
 app.get("/", (req, res) => {
   res.send(
-    req.session.user !== undefined
-      ? `Logged in as ${req.session.user.displayName}`
+    req.session.user
+      ? `Logged in as ${req.session.user.username}`
       : "logged out"
   );
 });
 
+
 // Middleware to handle authentication with GitHub
 app.get(
   "/github/callback",
-  passport.authenticate("github", {
-    failureRedirect: "/api-docs",
-    session: false,
-  }),
+  passport.authenticate("github", { failureRedirect: "/api-docs" }),
   (req, res) => {
+    console.log("User authenticated:", req.user);
+    if (!req.user) {
+      return res.status(500).send("Authentication failed");
+    }
     req.session.user = req.user;
-    res.redirect("/");
+    req.session.save((err) => {
+      if (err) {
+        console.error("Error saving session:", err);
+      }
+      res.redirect("/");
+    });
   }
 );
+
 
 // Error handler middleware (must be at the end of all routes)
 app.use((err, req, res, next) => {
